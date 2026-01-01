@@ -22,6 +22,13 @@ app.get('/', (req, res)=> {
     res.send('Hello World'); 
 });
 
+// route path , untuk ke kelompok product 
+app.get('/products', async (req, res)=> {
+    const products = await Product.find({})
+    // console.log(products)
+    res.render('products/index', {products})
+});
+
 
 // listen untuk berhasil atau tidak saat dijalankan 
 app.listen(3000, () => {
