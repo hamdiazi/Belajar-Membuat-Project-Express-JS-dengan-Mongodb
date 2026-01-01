@@ -3,6 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
+// *Memanggil Models dari product.js*
+const Product = require('./models/products');
 
 // connect to mongodb
 mongoose.connect('mongodb://127.0.0.1/shop_db').then((result)=> {
