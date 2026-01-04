@@ -30,6 +30,21 @@ app.get('/products', async (req, res)=> {
 });
 
 
+// membuat route ke create form
+app.get('/products/create', async (req, res) => {
+    res.render('products/create')
+})
+
+// membuat route ke detail product
+app.get('/products/:id', async (req, res) => {
+    const {id} = req.params
+    const product  = await Product.findById(id)
+    res.render('products/show', {product})
+})
+
+
+
+
 // listen untuk berhasil atau tidak saat dijalankan 
 app.listen(3000, () => {
     console.log('shop app listening on http://127.0.0.1:3000')
