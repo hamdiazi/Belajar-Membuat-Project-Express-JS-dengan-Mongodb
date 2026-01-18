@@ -16,6 +16,8 @@ mongoose.connect('mongodb://127.0.0.1/shop_db').then((result)=> {
 // set template engine nya
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','ejs');
+app.use(express.urlencoded({extended: true}))
+
 
 // route path untuk menampilkan respon nya berhasil
 app.get('/', (req, res)=> {
@@ -30,10 +32,19 @@ app.get('/products', async (req, res)=> {
 });
 
 
+
 // membuat route ke create form
 app.get('/products/create', async (req, res) => {
     res.render('products/create')
 })
+
+//route untuk post
+app.post('/products', async (req, res) => {
+    const product = new Product(req.body)
+    await product.save()
+    res.redirect(`/products/${product._id}`)
+})
+
 
 // membuat route ke detail product
 app.get('/products/:id', async (req, res) => {
@@ -41,6 +52,15 @@ app.get('/products/:id', async (req, res) => {
     const product  = await Product.findById(id)
     res.render('products/show', {product})
 })
+
+
+// membuat route ke edit product
+app.get('/products/:id/edit', async (req, res) => {
+    const {id} = req.params
+    const product  = await Product.findById(id)
+    res.render('products/edit', {product})
+})
+
 
 
 
