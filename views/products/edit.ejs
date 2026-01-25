@@ -7,12 +7,12 @@
 </head>
 <body>
         <h1> Edit a Product</h1>
-        <form action="/products/<%= product._id %>" method="post">
+        <form action="/products/<%= product._id %>?_method=PUT" method="post">
             <label for="name">Nama Product</label>
             <input type="text" name="name" id="name" value="<%= product.name %>">
 
             <label for="brand">Brand</label>
-            <input type="text" name="brand" id="brand" value="<%= product.brand %>">
+            <input type="text" name="brand" idw="brand" value="<%= product.brand %>">
 
             <label for="color">Warna</label>
             <input type="text" name="color" id="color" value= "<%= product.color %>">

@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express')
+const methodOverride = require('method-override')
 const mongoose = require('mongoose')
 const app = express()
 
@@ -17,6 +18,7 @@ mongoose.connect('mongodb://127.0.0.1/shop_db').then((result)=> {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 
 
 // route path untuk menampilkan respon nya berhasil
@@ -61,8 +63,12 @@ app.get('/products/:id/edit', async (req, res) => {
     res.render('products/edit', {product})
 })
 
-
-
+// route untuk PUT
+app.put('/products/:id', async (req, res) => {
+    const {id} = req.params
+    const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true})
+    res.redirect(`/products/${product._id}`)
+})
 
 
 // listen untuk berhasil atau tidak saat dijalankan 
