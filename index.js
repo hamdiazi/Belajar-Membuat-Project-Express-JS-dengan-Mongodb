@@ -27,12 +27,17 @@ app.get('/', (req, res)=> {
 });
 
 // route path , untuk ke kelompok product 
-app.get('/products', async (req, res)=> {
-    const products = await Product.find({})
+app.get('/products', async (req, res) => {
+    const { category } = req.query
+    if (category) {
+    const products = await Product.find({category})
     // console.log(products)
-    res.render('products/index', {products})
-});
-
+    res.render('products/index', {products, category})
+}   else {
+    const products = await Product.find({})
+    res.render('products/index', {products, category: 'All'})
+    }
+})
 
 
 // membuat route ke create form
@@ -63,13 +68,20 @@ app.get('/products/:id/edit', async (req, res) => {
     res.render('products/edit', {product})
 })
 
-// route untuk PUT
+// route untuk PUT dan EDIT Product
 app.put('/products/:id', async (req, res) => {
     const {id} = req.params
     const product = await Product.findByIdAndUpdate(id, req.body, {runValidators: true})
     res.redirect(`/products/${product._id}`)
 })
 
+
+// route untuk DELETE Product
+app.delete('/products/:id', async (req, res) => {
+    const {id} = req.params
+    await Product.findByIdAndDelete(id)
+    res.redirect(`/products`)
+})
 
 // listen untuk berhasil atau tidak saat dijalankan 
 app.listen(3000, () => {

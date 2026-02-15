@@ -6,14 +6,21 @@
     <title>Detail Product</title>
 </head>
 <body>
-    <h1><%= product.name %> - </h1>
+    <h1><%= product.name %></h1>
     <ul> 
         <li>Brand : <%= product.brand %> </li>
         <li>warna : <%= product.color %> </li>
         <li>Harga : <%= product.price %> </li>
-        <li>Kategory : <%= product.category %> </li>
+        <li>Kategory : 
+        <a href="/products?category=<%= product.category %>"> 
+            <%= product.category %> </a> </li>
     </ul>
+    
     <a href="/products">All Products</a>
     <a href="/products/<%= product._id %>/edit"> Edit </a>
+    <!-- <br> -->
+    <form action="/products/<%= product._id %>?_method=DELETE" method="post">
+        <button type="submit"> Delete </button>
+    </form>
 </body>
 </html>
